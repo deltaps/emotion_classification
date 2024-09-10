@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader
 import torch.nn as nn
 from tqdm import tqdm
 import torch
+import os
 
 # Check if CUDA is available, and use it
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -52,6 +53,9 @@ for epoch in range(10):  # Loop over the dataset 10 times
     print(f"Epoch [{epoch+1}/10], Loss: {running_loss/len(train_loader):.4f}")
 
 print("Finished Training")
+
+if not os.path.exists('save_weight'):
+    os.makedirs('save_weight')
 
 # Save the model
 torch.save(model.state_dict(), 'save_weight/model.pth')

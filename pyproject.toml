@@ -12,6 +12,7 @@ torch = {version = "^2.4.1+cu118", source = "pytorch-gpu-src"}
 torchvision = {version = "^0.19.1+cu118", source = "pytorch-gpu-src"}
 tqdm = "^4.66.5"
 kaggle = "^1.6.17"
+opencv-python = "^4.10.0.84"
 
 
 [[tool.poetry.source]]

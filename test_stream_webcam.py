@@ -5,6 +5,8 @@ from model import EmotionCNN
 import torch
 from torchvision import transforms
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 # Define the transformation for the input image
 transform = transforms.Compose([
     transforms.Grayscale(),        # Convert to grayscale
@@ -16,9 +18,9 @@ transform = transforms.Compose([
 # Emotion target labels
 emotion_tab = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
 
-# Load the model
-model = EmotionCNN()
-model.load_state_dict(torch.load('myNetwork/model.pth'))
+# Load the model.
+model = EmotionCNN().to(device)
+model.load_state_dict(torch.load('save_weight/model.pth', map_location=device))
 model.eval()
 
 # Load the Haar cascade for face detection
