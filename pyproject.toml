@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "emotion-classification"
+version = "0.1.0"
+description = ""
+authors = ["sacha <sacha.pronost@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+torch = {version = "^2.4.1+cu118", source = "pytorch-gpu-src"}
+torchvision = {version = "^0.19.1+cu118", source = "pytorch-gpu-src"}
+tqdm = "^4.66.5"
+kaggle = "^1.6.17"
+
+
+[[tool.poetry.source]]
+name = "pytorch-gpu-src"
+url = "https://download.pytorch.org/whl/cu118"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

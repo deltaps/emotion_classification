@@ -23,7 +23,12 @@ class EmotionDataset(Dataset):
         # Check if the folder dataset exists
         if not os.path.isdir(root_dir):
             print("The dataset folder does not exist. Pulling the dataset from Kaggle...")
-            os.environ['KAGGLE_CONFIG_DIR'] = os.path.expanduser('~/.kaggle')
+            try:
+                os.environ['KAGGLE_CONFIG_DIR'] = os.path.expanduser('~/.kaggle')
+            except:
+                # Throw an error if the Kaggle API key is not found
+                raise ValueError("Kaggle API key not found. Please follow the instructions to set up the Kaggle API key.")
+
             dataset = "jonathanoheix/face-expression-recognition-dataset"
             os.system(f'kaggle datasets download -d {dataset} -p ./dataset --unzip')
             print("Dataset downloaded successfully.")

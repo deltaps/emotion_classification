@@ -21,6 +21,7 @@ validation_loader = DataLoader(validation_dataset, batch_size=32, shuffle=False)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
+print("Starting Training...")
 # Training loop
 for epoch in range(10):  # Loop over the dataset 10 times
     running_loss = 0.0
@@ -43,4 +44,4 @@ for epoch in range(10):  # Loop over the dataset 10 times
 print("Finished Training")
 
 # Save the model
-torch.save(model.state_dict(), 'model.pth')
+torch.save(model.state_dict(), 'save_weight/model.pth')
