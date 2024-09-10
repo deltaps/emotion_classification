@@ -4,6 +4,9 @@ from PIL import Image
 from model import EmotionCNN
 import torch
 from torchvision import transforms
+import os
+import tkinter as tk
+from tkinter import simpledialog
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -18,9 +21,32 @@ transform = transforms.Compose([
 # Emotion target labels
 emotion_tab = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise']
 
+# List checkpoint files
+checkpoint_dir = 'checkpoints'
+checkpoint_files = [f for f in os.listdir(checkpoint_dir) if f.endswith('.pth')]
+
+if len(checkpoint_files) == 0:
+    raise FileNotFoundError("No checkpoint files found in the 'checkpoints' directory.")
+elif len(checkpoint_files) == 1:
+    checkpoint_file = checkpoint_files[0]
+else:
+    # Create a simple Tkinter window
+    root = tk.Tk()
+    root.withdraw()  # Hide the root window
+
+    # Create a list of checkpoint files for the user to choose from
+    choice = simpledialog.askinteger("Checkpoint Selection", 
+                                     "Select the checkpoint file to use:\n" + 
+                                     "\n".join([f"{i}: {file}" for i, file in enumerate(checkpoint_files)]))
+
+    if choice is None or choice < 0 or choice >= len(checkpoint_files):
+        raise ValueError("Invalid selection. Please restart and select a valid checkpoint file.")
+
+    checkpoint_file = checkpoint_files[choice]
+
 # Load the model.
 model = EmotionCNN().to(device)
-model.load_state_dict(torch.load('checkpoints/model.pth', map_location=device))
+model.load_state_dict(torch.load(os.path.join(checkpoint_dir, checkpoint_file), map_location=device))
 model.eval()
 
 # Load the Haar cascade for face detection

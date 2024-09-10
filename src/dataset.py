@@ -20,8 +20,12 @@ class EmotionDataset(Dataset):
             transform (callable, optional): Optional transform to be applied
                 on a sample.
         """
+        if "dataset_custom" in root_dir:
+            if not os.path.isdir(root_dir):
+                raise ValueError("Custom dataset folder does not exist. Please provide the correct path.")
+            print("Using custom dataset.")
         # Check if the folder dataset exists
-        if not os.path.isdir(root_dir):
+        elif not os.path.isdir(root_dir):
             print("The dataset folder does not exist. Pulling the dataset from Kaggle...")
             try:
                 os.environ['KAGGLE_CONFIG_DIR'] = os.path.expanduser('~/.kaggle')
