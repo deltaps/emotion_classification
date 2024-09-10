@@ -62,16 +62,6 @@ To download datasets from Kaggle, you'll need to create a folder and add your Ka
         ```
 1. **Download the** `kaggle.json` API key file from your Kaggle account and place it in the .kaggle folder. The file is used for Kaggle dataset access.
 
-## Running the Training
-
-To start training the neural network, run the `training.py` script:
-
-```bash
-python src/training.py
-```
-
-This script will load the dataset, process it, train the model, and save the trained model weights to the `checkpoints/` folder.
-
 ## Testing the Model with Webcam
 
 You can test the model using your computer's webcam to classify emotions in real-time. Run the `test_stream_webcam.py` script:
@@ -81,3 +71,13 @@ python src/test_stream_webcam.py
 ```
 
 This script captures video from your webcam, processes each frame, and predicts the emotion being displayed.
+
+## Running the Training
+
+To start training the neural network, run the `training.py` script:
+
+```bash
+python src/training.py
+```
+
+This script will load the dataset, process it, train the model, and save the trained model weights to the `checkpoints/` folder.
