@@ -6,8 +6,11 @@ import torch.nn as nn
 from tqdm import tqdm
 import torch
 
+# Check if CUDA is available, and use it
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 # Instantiate the model
-model = EmotionCNN()
+model = EmotionCNN().to(device)
 
 # Instantiate dataset for training and validation
 train_dataset = EmotionDataset(root_dir='dataset/images/train', transform=transform)
@@ -26,6 +29,11 @@ print("Starting Training...")
 for epoch in range(10):  # Loop over the dataset 10 times
     running_loss = 0.0
     for images, labels in tqdm(train_loader):
+        
+        # Move data to device
+        images = images.to(device)
+        labels = labels.to(device)
+
         # Zero the parameter gradients
         optimizer.zero_grad()
         
