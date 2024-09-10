@@ -20,7 +20,7 @@ emotion_tab = ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise'
 
 # Load the model.
 model = EmotionCNN().to(device)
-model.load_state_dict(torch.load('save_weight/model.pth', map_location=device))
+model.load_state_dict(torch.load('checkpoints/model.pth', map_location=device))
 model.eval()
 
 # Load the Haar cascade for face detection

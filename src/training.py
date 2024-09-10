@@ -54,8 +54,8 @@ for epoch in range(10):  # Loop over the dataset 10 times
 
 print("Finished Training")
 
-if not os.path.exists('save_weight'):
-    os.makedirs('save_weight')
+if not os.path.exists('checkpoints'):
+    os.makedirs('checkpoints')
 
 # Save the model
-torch.save(model.state_dict(), 'save_weight/model.pth')
+torch.save(model.state_dict(), 'checkpoints/model.pth')
