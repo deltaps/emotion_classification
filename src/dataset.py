@@ -4,11 +4,18 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 
 # Define transformations for the dataset (grayscale, resizing, normalization)
-transform = transforms.Compose([
+transform_CNN = transforms.Compose([
     transforms.Grayscale(),        # Convert to grayscale
     transforms.Resize((64, 64)),    # Resize to 64x64
     transforms.ToTensor(),          # Convert to tensor
     transforms.Normalize((0.5,), (0.5,))  # Normalize the image
+])
+
+transform_ViT = transforms.Compose([
+    transforms.Grayscale(num_output_channels=3),  # Convertir en 3 canaux
+    transforms.Resize((224, 224)),  # Taille attendue par ViT
+    transforms.ToTensor(),
+    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))  # Normalisation pour 3 canaux
 ])
 
 # Define a custom dataset class

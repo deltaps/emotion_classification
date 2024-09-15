@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torchvision import transforms
+from torchvision.models import vit_b_16
 
 # Define a simple CNN model
 class EmotionCNN(nn.Module):
@@ -34,7 +36,24 @@ class EmotionCNN(nn.Module):
         
         return x
 
+class EmotionViT(nn.Module):
+    def __init__(self, num_classes=7):
+        super(EmotionViT, self).__init__()
+        
+        # Charger un ViT pré-entraîné sur ImageNet
+        self.vit = vit_b_16(pretrained=True)
+        
+        # Remplacer la dernière couche pour correspondre au nombre de classes (émotions)
+        self.vit.heads = nn.Linear(self.vit.heads.head.in_features, num_classes)
+
+    def forward(self, x):
+        return self.vit(x)
+
 if __name__ == "__main__":
     # Instantiate the model
-    model = EmotionCNN()
-    print(model)
+    model_cnn = EmotionCNN()
+    model_transformers = EmotionViT()
+    print("CNN MODEL ======================")
+    print(model_cnn)
+    print("TRANSFORMERS MODEL =============")
+    print(model_transformers)

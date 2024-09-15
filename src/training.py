@@ -1,6 +1,6 @@
 import torch.optim as optim
-from model import EmotionCNN
-from dataset import EmotionDataset, transform
+from model import EmotionCNN, EmotionViT
+from dataset import EmotionDataset, transform_CNN, transform_ViT
 from torch.utils.data import DataLoader
 import torch.nn as nn
 from tqdm import tqdm
@@ -12,8 +12,19 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 print(device)
 
-# Instantiate the model
-model = EmotionCNN().to(device)
+print("Which model do you want to use? (0 for CNN, 1 for transformer)")
+model_number = int(input())
+
+if model_number != 0 and model_number != 1:
+    raise Exception("The model number is incorrect, please choose 0 or 1.")
+elif model_number == 0:
+    print("CNN choose")
+    model = EmotionCNN().to(device)
+    transform = transform_CNN
+else:
+    print("ViT choose")
+    model = EmotionViT().to(device)
+    transform = transform_ViT
 
 # Instantiate dataset for training and validation
 train_dataset = EmotionDataset(root_dir='dataset/images/train', transform=transform)
@@ -58,4 +69,4 @@ if not os.path.exists('checkpoints'):
     os.makedirs('checkpoints')
 
 # Save the model
-torch.save(model.state_dict(), 'checkpoints/model.pth')
+torch.save(model.state_dict(), f'checkpoints/model_{model_number}.pth')
